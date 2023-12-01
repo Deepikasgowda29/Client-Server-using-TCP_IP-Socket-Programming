@@ -1,22 +1,53 @@
 #include"server.h"
 
-void * doReceving(void* socketID){
-  int fd = *((int*) socketID);
-  char server_message[MAX] ;
-
-  while(1){
-    memset(server_message,'\0',sizeof(server_message));
-
-    // Receive the server's response:
-    if(recv(fd, server_message, sizeof(server_message), 0) < 0){
-      printf("\033[1;31m [--] Error while receiving server's msg \033[0m\n");
-      break;
-    }
-
-    // printing the message
-    printf("%s\n",server_message);
-  }
-
-  printf("[X] Connection closed ...\n");
-  pthread_exit(NULL);
+void* Msg_Receving(void* Socket_id) // function to receive message from server
+{
+int socket_fd = *((int*) Socket_id); //pointer to assign value to socket file descriptor for communication
+char server_msg[MAX]; //array to store received messages from server
+ 
+while(1) 
+{
+//clean buffer
+memset(server_msg,'\0',sizeof(server_msg));
+ 
+//receving the server message
+if(recv(socket_fd,server_msg,sizeof(server_msg),0)<0); //attempts to receive a message from the server using recv() function
+{
+printf("\n Error while receving the server message");
+return -1; 
+}
+ 
+//printing the message
+printf("%s\n",server_msg);
+}
+}
+ 
+//creating a thread
+pthread_t thread;
+pthread_create(&thread, NULL,Msg_Receving, (void*), &socket_desc); //uses pthread_create() function to start execution of message receving function  in this new thread
+printf("Now message can send to server\n");
+ 
+while(1)
+{
+memset(client_message,'\0',sizeof(client_message)); //clears the client message buffer
+gets(client_message); //reads user input
+ 
+if(strcmp(client_message,"EXIT")==0)
+{
+ 
+//Sends the message to server
+if(send(socket_desc, client_message, strlen(client_message),0)<0)
+{
+printf("Fails to send message\n");
+return -1;
+}
+printf("you are exited\n");
+break;
+}
+else{
+// send message to server
+if(send(socket_desc, client_message, strlen(client_message),0)<0){
+printf("Fails to send message\n");
+return -1;
+}
 }
