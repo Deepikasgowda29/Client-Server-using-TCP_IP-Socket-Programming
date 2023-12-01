@@ -22,7 +22,7 @@ int main(int argc,char** argv){
   struct sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(port);//is a function used to convert host to network byte order
-  server_addr.sin_addr.s_addr = inet_addr("127.0.0.1"); //is a function used to convert string representation into binary bite order
+  server_addr.sin_addr.s_addr = inet_addr("127.0.0.1"); //is a function used to convert string representation into binary byte order
 
   // Bind to the set port and IP
   if( bind(sock_desc, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0 ){
