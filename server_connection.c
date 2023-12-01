@@ -1,5 +1,5 @@
 
-#include "server.h"
+#include "header.h"
 
 // Creatinng client count global variable to check no of clients
 int clientCount=0;
@@ -43,7 +43,7 @@ int main(int argc,char** argv){
     Client[clientCount].socketID = accept(sock_desc, (struct sockaddr*)&Client[clientCount].client_addr, &Client[clientCount].len);
     Client[clientCount].index = clientCount;
     stpcpy(Client[clientCount].status,"ACTIVE");
-    pthread_create(&thread[clientCount], NULL, ChattingProcess, (void*)&Client[clientCount]);
+    pthread_create(&thread[clientCount], NULL, Command, (void*)&Client[clientCount]);
     clientCount++;
   }
 
