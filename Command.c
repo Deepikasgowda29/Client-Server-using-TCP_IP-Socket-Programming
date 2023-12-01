@@ -9,7 +9,7 @@ extern int clientCount;
 extern struct client Client[3];
 extern pthread_t thread[3];
 
-void *ChattingProcess(void *ClientDetail) {
+void *Command(void *ClientDetail) {
   // Type casting ClientDetail to (struct clint *) type from (void *)
   struct client *clientDetail = (struct client *)ClientDetail;
 
