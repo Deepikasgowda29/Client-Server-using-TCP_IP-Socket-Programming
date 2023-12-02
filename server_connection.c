@@ -10,57 +10,65 @@ pthread_t thread[3];
 
 int main(int argc,char** argv)
 {
+
+	if(argc!=2)
+	{
+		fprintf(stderr,"Incorrect arguments count !! Enter the port number\n");
+		exit(1);
+	}
+	else
+	{
   // Creating the socket
-  uint8_t sock_desc = socket(AF_INET, SOCK_STREAM, 0);
-  if(sock_desc < 0)
-  {
-    perror("[-] Error while creating the socket...\n");
-    return -1;
-  }
-  printf("\n [+] Socket created successfully \n");
-  int port = atoi(argv[1]);
+		uint8_t sock_desc = socket(AF_INET, SOCK_STREAM, 0);
+		if(sock_desc < 0)
+		{
+    			perror("\033[1;31m[-] Error while creating the socket...\033[1;0m\n");
+    			return -1;
+  		}
+  		printf("\n\033[1;32m[+] Socket created successfully \033[1;0m\n");
+  		int port = atoi(argv[1]);
 
   // Creating server_addr and setting its port and IP
-  struct sockaddr_in server_addr;
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(port);//is a function used to convert host to network byte order
-  server_addr.sin_addr.s_addr = inet_addr("127.0.0.1"); //is a function used to convert string representation into binary byte order
+  		struct sockaddr_in server_addr;
+  		server_addr.sin_family = AF_INET;
+  		server_addr.sin_port = htons(port);
+  		server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
   // Bind to the set port and IP
-  if( bind(sock_desc, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0 )
-  {
-    perror("[-] Couldn't bind to the port... \n");
-    return -1;
-  }
-  printf(" [+] Done with binding... \n");
+  		if( bind(sock_desc, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0 )
+  		{
+    			perror("\033[1;31m[-] Couldn't bind to the port...\033[1;0m \n");
+    			return -1;
+  		}
+  		printf("\033[1;33m[+] Done with binding... \033[1;0m\n");
 
   // Listen for clients
-  if( listen(sock_desc,3) < 0 )
-  {
-    perror(" [-] Cannot Listen... \n");
-    return -1;
-  }
-  printf("[+] Listening for incoming connections...\n");
+  		if( listen(sock_desc,3) < 0 )
+  		{
+    			perror(" \033[1;31m[-] Cannot Listen... \\033[1;0mn");
+    			return -1;
+  		}
+  		printf("\033[1;33m[+] Listening for incoming connections...\033[1;0m\n");
 
   // Accept an incoming connections
-  while(clientCount < 3)
-  {
-    Client[clientCount].socketID = accept(sock_desc, (struct sockaddr*)&Client[clientCount].client_addr, &Client[clientCount].len);
-    Client[clientCount].index = clientCount;
-    stpcpy(Client[clientCount].status,"ACTIVE");
-    pthread_create(&thread[clientCount], NULL, Command, (void*)&Client[clientCount]);
-    clientCount++;
-  }
+  		while(clientCount < 3)
+  		{
+    			Client[clientCount].socketID = accept(sock_desc, (struct sockaddr*)&Client[clientCount].client_addr, &Client[clientCount].len);
+    			Client[clientCount].index = clientCount;
+    			strcpy(Client[clientCount].status,"ACTIVE");
+    			pthread_create(&thread[clientCount], NULL, Command, (void*)&Client[clientCount]);
+    			clientCount++;
+  		}
 
   // pthread joining which waits for a thread to terminate, detaches the thread, then returns the thread exit status
-  for(int i = 0; i < clientCount; i++)
-  {
-    pthread_join(thread[i], NULL);
-  }
+  		for(int i = 0; i < clientCount; i++)
+  		{
+    			pthread_join(thread[i], NULL);
+  		}
 
-  printf("\n\n---DONE---\n\n");
-  //closing the socket
-  close(sock_desc);
-  //fclose(fp);
-  return 0;
+ 		printf("\033[1;32m\n\n---DONE---\n\n\033[1;0m");
+  
+  		close(sock_desc);  //closing the socket
+  	}
+  	return 0;
 }
