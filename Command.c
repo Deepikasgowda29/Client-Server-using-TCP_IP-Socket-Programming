@@ -7,7 +7,6 @@ extern int clientCount;
 // Declare and initializing pthread_t type variable and struct client variable
 // for use
 extern struct client Client[3];
-extern pthread_t thread[3];
 
 void *Command(void *ClientDetail) 
 {
