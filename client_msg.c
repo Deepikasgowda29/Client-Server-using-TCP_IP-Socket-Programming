@@ -13,7 +13,7 @@ memset(server_msg,'\0',sizeof(server_msg));
 //receving the server message
 if(recv(socket_fd,server_msg,sizeof(server_msg),0)<0); //attempts to receive a message from the server using recv() function
 {
-printf("\n Error while receving the server message");
+perror("\n Error while receving the server message");
 return -1; 
 }
  
@@ -38,7 +38,7 @@ if(strcmp(client_message,"EXIT")==0)
 //Sends the message to server
 if(send(socket_desc, client_message, strlen(client_message),0)<0)
 {
-printf("Fails to send message\n");
+perror("Fails to send message\n");
 return -1;
 }
 printf("you are exited\n");
@@ -47,7 +47,7 @@ break;
 else{
 // send message to server
 if(send(socket_desc, client_message, strlen(client_message),0)<0){
-printf("Fails to send message\n");
+perror("Fails to send message\n");
 return -1;
 }
 }
