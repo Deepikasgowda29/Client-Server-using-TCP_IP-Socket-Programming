@@ -3,79 +3,84 @@
 
 int main(int argc,char** argv)
 {
-    int port = atoi(argv[1]);
 
-    uint8_t socket_desc;
-    struct sockaddr_in server_addr;
-    char client_message[MAX];
+	if(argc!=2)
+	{
+		fprintf(stderr,"Incorrect arguments count !! Enter the port number\n");
+		exit(1);
+	}
+	else
+	{
+    		int port = atoi(argv[1]);
+    
+    		uint8_t socket_desc;
+    		struct sockaddr_in server_addr;
+    		char client_message[MAX];
 
-    // Clean buffers:
-  memset(client_message,'\0',sizeof(client_message));
+  		memset(client_message,'\0',sizeof(client_message));  // Clean buffers
 
-    // Create socket:
-    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    		socket_desc = socket(AF_INET, SOCK_STREAM, 0);   // Create socket
 
-    if(socket_desc < 0)
-    {
-        perror("[-] Unable to create socket \n");
-        return -1;
-    }
+    		if(socket_desc < 0)
+    		{
+        		perror("\033[1;31m[-] Unable to create socket \033[1;0m\n");
+        		return -1;
+    		}
 
-    printf("\n [+] Socket created successfully... n");
+    		printf("\n\033[1;32m [+] Socket created successfully... \n\033[1;0m");
 
     // Set port and IP the same as server-side:
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(port);
-    server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    		server_addr.sin_family = AF_INET;
+    		server_addr.sin_port = htons(port);
+    		server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
 
     // Send connection request to server:
-    uint8_t a = connect(socket_desc, (struct sockaddr*)&server_addr, sizeof(server_addr));
-    if( a< 0)
-    {
-        perror("[-] Unable to connect to the server \n");
-        return -1;
-    }
-    printf("[+] Connection established...%d n",a);
+    		
+    		if( connect(socket_desc, (struct sockaddr*)&server_addr, sizeof(server_addr))< 0)
+    		{
+        		perror("\033[1;31m[-] Unable to connect to the server \033[1;0m\n");
+        		return -1;
+    		}
+    		printf("\033[1;32m[+] Connection established...%d \033[1;0m\n");
 
   //creating a thread
-  pthread_t thread;
-  pthread_create(&thread, NULL, doReceving, (void*) &socket_desc);
+  		pthread_t thread;
+  		pthread_create(&thread, NULL, doReceving, (void*) &socket_desc);
 
-  printf("\n\n....... YOU CAN SEND MESSAGE TO SERVER NOW ....... \n");
+  		printf("\n\n....... YOU CAN SEND MESSAGE TO SERVER NOW ....... \n");
 
-    while(1)
-    {
-    memset(client_message,'\0', sizeof(client_message));
+    		while(1)
+    		{
+    			memset(client_message,'\0', sizeof(client_message));
 
-    // Get input from the user:
-    gets(client_message);
+    			gets(client_message);  // Get input from the user
 
-    	if(strcmp(client_message, "EXIT")==0)
-    	{
+    			if(strcmp(client_message, "EXIT")==0)
+    			{
       // Send the message to server:
-      	if(send(socket_desc, client_message, strlen(client_message), 0) < 0)
-      		{
-        	perror("[--] Unable to send message \n");
-        	return -1;
-      		}
-      		printf(" \n\n[X] you have been exited...\n");
-      		break;
-    	}
-    	else
-    	{
+      				if(send(socket_desc, client_message, strlen(client_message), 0) < 0)
+      				{
+        				perror("\033[1;31m[--] Unable to send message \033[1;0m\n");
+        				return -1;
+      				}
+      				printf(" \n\n\033[1;31m[X] you have been exited...\033[1;0m\n");
+      				break;
+    			}
+    			else
+    			{
       // Send the message to server:
-      		if(send(socket_desc, client_message, strlen(client_message), 0) < 0)
-      		{
-        	perror("[--] Unable to send message\n");
-        	return -1;
-      		}
-    	}
-    }
+      				if(send(socket_desc, client_message, strlen(client_message), 0) < 0)
+      				{
+        				perror("\033[1;31m[--] Unable to send message\033[1;0m\n");
+        				return -1;
+      				}
+    			}	
+    		}
 
     // Close the socket:
-    close(socket_desc);
-  printf("[X] Socket is been closed... n\n");
-
-    return 0;
+    		close(socket_desc);
+  		printf("\033[1;31m[X] Socket is been closed... n\033[1;0m\n");
+  	}
+    	return 0;
 }
