@@ -8,7 +8,6 @@
 #include <stdbool.h>
 #include <ctype.h>
 
-#define PORT 9000
 #define MAX 2000
 
 struct client{
