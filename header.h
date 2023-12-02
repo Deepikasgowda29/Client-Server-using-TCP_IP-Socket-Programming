@@ -5,10 +5,14 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <pthread.h>
-#include <stdbool.h>
-#include <ctype.h>
 
 #define MAX 2000
+
+//macros for emoji unicodes
+
+#define LAUGH "\U0001f602"
+#define SMILE "\U0001f600"
+#define HEART "\U00002764"
 
 struct client{
   int index;
@@ -22,5 +26,7 @@ struct client{
 void * ChattingProcess(void * ClientDetail);
 
 void message(void* ClientDetail,char* clientMsg);
+
+char* replaceWord(char* s,char* oldW, char* newW); 
 
 void * doReceving(void* socketID);
