@@ -5,7 +5,7 @@ int main(int argc,char** argv)
 {
     int port = atoi(argv[1]);
 
-    int socket_desc;
+    uint8_t socket_desc;
     struct sockaddr_in server_addr;
     char client_message[MAX];
 
@@ -15,8 +15,9 @@ int main(int argc,char** argv)
     // Create socket:
     socket_desc = socket(AF_INET, SOCK_STREAM, 0);
 
-    if(socket_desc < 0){
-        printf("[-] Unable to create socket \n");
+    if(socket_desc < 0)
+    {
+        perror("[-] Unable to create socket \n");
         return -1;
     }
 
@@ -29,9 +30,10 @@ int main(int argc,char** argv)
 
 
     // Send connection request to server:
-    int a = connect(socket_desc, (struct sockaddr*)&server_addr, sizeof(server_addr));
-    if( a< 0){
-        printf("[-] Unable to connect to the server \n");
+    uint8_t a = connect(socket_desc, (struct sockaddr*)&server_addr, sizeof(server_addr));
+    if( a< 0)
+    {
+        perror("[-] Unable to connect to the server \n");
         return -1;
     }
     printf("[+] Connection established...%d n",a);
@@ -42,28 +44,33 @@ int main(int argc,char** argv)
 
   printf("\n\n....... YOU CAN SEND MESSAGE TO SERVER NOW ....... \n");
 
-    while(1){
+    while(1)
+    {
     memset(client_message,'\0', sizeof(client_message));
 
     // Get input from the user:
     gets(client_message);
 
-    if(strcmp(client_message, "EXIT")==0){
+    	if(strcmp(client_message, "EXIT")==0)
+    	{
       // Send the message to server:
-      if(send(socket_desc, client_message, strlen(client_message), 0) < 0){
-        printf("[--] Unable to send message \n");
-        return -1;
-      }
-      printf(" \n\n[X] you have been exited...\n");
-      break;
-    }
-    else{
+      	if(send(socket_desc, client_message, strlen(client_message), 0) < 0)
+      		{
+        	perror("[--] Unable to send message \n");
+        	return -1;
+      		}
+      		printf(" \n\n[X] you have been exited...\n");
+      		break;
+    	}
+    	else
+    	{
       // Send the message to server:
-      if(send(socket_desc, client_message, strlen(client_message), 0) < 0){
-        printf("[--] Unable to send message\n");
-        return -1;
-      }
-    }
+      		if(send(socket_desc, client_message, strlen(client_message), 0) < 0)
+      		{
+        	perror("[--] Unable to send message\n");
+        	return -1;
+      		}
+    	}
     }
 
     // Close the socket:
