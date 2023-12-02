@@ -4,7 +4,7 @@
 // Creatinng clint count global variable to check no of clients
 extern int clientCount;
 
-// Declare and initializing pthread_t type variable and struct client variable
+// Declare and initializing struct client variable
 // for use
 extern struct client Client[3];
 
