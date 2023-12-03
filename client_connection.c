@@ -27,12 +27,12 @@ int main(int argc,char** argv)
         		return -1;
     		}
 
-    		printf("\n\033[1;32m [+] Socket created successfully... \n\033[1;0m");
+    		printf("\n\033[1;32m[+] Socket created successfully... \n\033[1;0m");
 
     // Set port and IP the same as server-side:
     		server_addr.sin_family = AF_INET;
     		server_addr.sin_port = htons(port);
-    		server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    		server_addr.sin_addr.s_addr = inet_addr("192.168.1.122");
 
 
     // Send connection request to server:
@@ -42,11 +42,11 @@ int main(int argc,char** argv)
         		perror("\033[1;31m[-] Unable to connect to the server \033[1;0m\n");
         		return -1;
     		}
-    		printf("\033[1;32m[+] Connection established...%d \033[1;0m\n");
+    		printf("\033[1;32m[+] Connection established...\033[1;0m\n");
 
   //creating a thread
   		pthread_t thread;
-  		pthread_create(&thread, NULL, doReceving, (void*) &socket_desc);
+  		pthread_create(&thread, NULL, Msg_Receving, (void*) &socket_desc);
 
   		printf("\n\n....... YOU CAN SEND MESSAGE TO SERVER NOW ....... \n");
 
@@ -80,7 +80,7 @@ int main(int argc,char** argv)
 
     // Close the socket:
     		close(socket_desc);
-  		printf("\033[1;31m[X] Socket is been closed... n\033[1;0m\n");
+  		printf("\033[1;31m[X] Socket is been closed... \033[1;0m\n");
   	}
     	return 0;
 }
