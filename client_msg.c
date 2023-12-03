@@ -1,8 +1,8 @@
 #include"header.h"
 
-void * doReceving(void* socketID)
+void * Msg_Receving(void* socketID)
 {
-  	uint8_t fd = *((int*) socketID);
+  	uint8_t sock_fd = *((int*) socketID);
   	char server_message[MAX] ;
 
   	while(1)
@@ -10,7 +10,7 @@ void * doReceving(void* socketID)
     		memset(server_message,'\0',sizeof(server_message));
 
     // Receive the server's response:
-    		if(recv(fd, server_message, sizeof(server_message), 0) < 0)
+    		if(recv(sock_fd, server_message, sizeof(server_message), 0) < 0)
     		{
       			perror("\033[1;31m[--] Error while receiving server's msg \033[1;0m\n");
       			break;
