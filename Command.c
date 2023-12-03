@@ -24,14 +24,14 @@ void* Command(void * ClientDetail)
 
   // sending the server Basic command Codes for CLIENT GUIDE
   	char output[MAX];
-  	char basicCommand[MAX] = "\n\033[1;36m... [SERVER-COMMANDS-GUIDE] ...\n\n--> 'LIST'\t:- to get clients list and status\n--> 'EXIT'\t:- to end the connection\n--> 'HELP'\t:- to get command list\n\n--> '<client id> : <message>'\t:- to send message\nTo print Emojis : type HEART LAUGH SMILE\n\n-------------------------------\033[1;0m\n";
+  	char basicCommand[MAX] = "\n\033[1;36m... [SERVER-COMMANDS-GUIDE] ...\n\n--> 'LIST'\t:- to get clients list and status\n--> 'EXIT'\t:- to end the connection\n--> 'HELP'\t:- to get command list\n\n--> '<client id> : <message>'\t:- to send message\n\n--> To send Emojis type : [ \U00002764 : HEART ] [ \U0001f602 : LAUGH ] [ \U0001f60a : SMILE ] [ \U0001f621 : ANGRY ] [ \U0001f44d : OK ]\n\n---------------------------------------------------------------------------------------------------\033[1;0m\n";
   	char buffer[MAX];
 
   	memset(output,'\0',sizeof(output));
   	strcpy(output, basicCommand);
   	if(send(clientSocket, output, strlen(output), 0) < 0)
   	{
-    		perror(" \033[1;31m[--] Can't send message... \033[1;0m\n");
+    		perror("\033[1;31m[--] Can't send message... \033[1;0m\n");
     		return NULL;
   	}
   // Message processing
@@ -46,11 +46,11 @@ void* Command(void * ClientDetail)
     // receving client message
     		if(recv(clientSocket, clientMsg, sizeof(clientMsg), 0) < 0)
     		{
-      			perror(" \033[1;31m[--] Couldn't receive client message... \033[1;0m\n");
+      			perror("\033[1;31m[--] Couldn't receive client message... \033[1;0m\n");
       			break;
     		}
     		fprintf(fp,"\n+++ CLIENT %d | client message : %s | client socket : %d\n",index+1, clientMsg, clientSocket);
-    		printf("\n\033[1:32m +++ CLIENT %d | client message : %s | client socket : %d\n",index+1, clientMsg, clientSocket);
+    		printf("\n+++ CLIENT %d | client message : %s | client socket : %d\n",index+1, clientMsg, clientSocket);
 
     //if the message contains ':' delemeter then set CHAT = true;
     		char *ck;
@@ -97,7 +97,7 @@ void* Command(void * ClientDetail)
     
     		else
     		{
-      			strcpy(output, "\n\033[1;34m[res] WRONG INPUT COMMAND... PLEASE TRY AGAIN WITH VALID COMMAND...\033[1;0m\n");
+      			strcpy(output, "\n\033[1;31m[res] WRONG INPUT COMMAND... PLEASE TRY AGAIN WITH VALID COMMAND...\033[1;0m\n");
     		}
     
 
@@ -111,7 +111,7 @@ void* Command(void * ClientDetail)
   	}
 
   // making this client status DE-ACTIVE and closing its socket
-  	stpcpy(clientDetail->status,"DE_ACTIVE");
+  	stpcpy(clientDetail->status,"\033[1;31mDE_ACTIVE\033[1;0m");
   	close(clientSocket);
   	printf("\n\033[1;31m[...] Client %d Exited...Thread id = %u \033[1;0m\n\n",index + 1, (unsigned int)pthread_self());
   	return NULL;
