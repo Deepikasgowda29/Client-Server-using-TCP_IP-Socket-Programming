@@ -29,27 +29,3 @@ replaceString.o:     replaceString.c header.h
 				
 clean:	      
 		rm $(TARGET1) $(TARGET2) *.txt *.o
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
