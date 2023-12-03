@@ -1,7 +1,7 @@
 
 #include "header.h"
 
-// Creatinng client count global variable to check no of clients
+// Creating client count global variable to check no of clients
 uint8_t clientCount=0;
 
 // Declare and initializing pthread_t type variable and struct client variable for use
@@ -32,7 +32,7 @@ int main(int argc,char** argv)
   		struct sockaddr_in server_addr;
   		server_addr.sin_family = AF_INET;
   		server_addr.sin_port = htons(port);
-  		server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+  		server_addr.sin_addr.s_addr = inet_addr("192.168.1.122");  //address of the server machine
 
   // Bind to the set port and IP
   		if( bind(sock_desc, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0 )
@@ -43,9 +43,9 @@ int main(int argc,char** argv)
   		printf("\033[1;33m[+] Done with binding... \033[1;0m\n");
 
   // Listen for clients
-  		if( listen(sock_desc,3) < 0 )
+  		if( listen(sock_desc,1) < 0 )
   		{
-    			perror(" \033[1;31m[-] Cannot Listen... \\033[1;0mn");
+    			perror("\033[1;31m[-] Cannot Listen... \n\033[1;0m");
     			return -1;
   		}
   		printf("\033[1;33m[+] Listening for incoming connections...\033[1;0m\n");
