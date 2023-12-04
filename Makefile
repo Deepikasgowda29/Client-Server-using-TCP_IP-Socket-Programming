@@ -1,7 +1,7 @@
 cc = gcc
 TARGET1 = server
 TARGET2 = client
-FLAG = -o
+FLAG = -o -pthread
 
 all:		server_connection.o server_msg.o command.o client_connection.o client_msg.o  replaceString.o 
 		$(cc) server_connection.o server_msg.o command.o replaceString.o  $(FLAG) $(TARGET1)
