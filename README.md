@@ -2,10 +2,10 @@
 Group 5
 
 First you have to run server using 
-./server <port number>
+./server port number
 
 Then you have to run the client side in new terminal using run command
-./client <port number>
+./client port number
 
 In this program we can add maximum of 3 clients.
 
