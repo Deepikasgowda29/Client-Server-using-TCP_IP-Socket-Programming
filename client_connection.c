@@ -32,7 +32,7 @@ int main(int argc,char** argv)
     // Set port and IP the same as server-side:
     		server_addr.sin_family = AF_INET;
     		server_addr.sin_port = htons(port);
-    		server_addr.sin_addr.s_addr = inet_addr("10.233.72.103");
+    		server_addr.sin_addr.s_addr = inet_addr("10.226.0.10");
 
 
     // Send connection request to server:
