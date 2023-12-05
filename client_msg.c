@@ -2,7 +2,7 @@
 
 void * Msg_Receving(void* socketID)
 {
-  	uint8_t sock_fd = *((int*) socketID);
+  	uint8_t sock_fd = *((int*) socketID); //pointer to assign value to socket file descriptor for communication
   	char server_message[MAX] ;
 
   	while(1)
