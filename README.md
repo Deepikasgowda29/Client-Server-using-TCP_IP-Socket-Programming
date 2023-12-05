@@ -11,4 +11,4 @@ In this program we can add maximum of 3 clients.
 
 After adding multiple clients you can chat with each other.
 
-NOTE :- The port number in the cliet and server should be same.
+NOTE :- The port number in the client and server should be same.
