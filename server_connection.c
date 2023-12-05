@@ -32,7 +32,7 @@ int main(int argc,char** argv)
   		struct sockaddr_in server_addr;
   		server_addr.sin_family = AF_INET;
   		server_addr.sin_port = htons(port);
-  		server_addr.sin_addr.s_addr = inet_addr("192.168.1.122");  //address of the server machine
+  		server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");  //address of the server machine
 
   // Bind to the set port and IP
   		if( bind(sock_desc, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0 )
